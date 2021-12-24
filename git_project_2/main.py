@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QLabel
 from PyQt5 import uic
-from PyQt5.QtGui import QPainter, QColor
+from PyQt5.QtGui import QPainter, QColor, QPixmap
 from PyQt5.QtCore import Qt
 import random
 
@@ -10,30 +10,28 @@ class Window(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi('UI.ui', self)
-        self.do_paint = False
+        self.flag = False
         self.dx = self.frameGeometry().width()
         self.dy = self.frameGeometry().height()
         self.pushButton.clicked.connect(self.paint)
 
-    def circle(self, qp):
-        self.x = random.randint(1, self.dx - 1)
-        self.y = random.randint(1, self.dy - 1)
-        qp.setBrush(QColor(255, 255, 0))
-        width = 50
-        qp.drawEllipse(self.x - width // 2, self.y - width // 2, width, width)
-
     def paintEvent(self, event):
-        if self.do_paint is True:
-            # Создаем объект QPainter для рисования
-            qp = QPainter(self)
-            # Начинаем процесс рисования
-            qp.begin(self)
-            self.circle(qp)
-            # Завершаем рисование
-            qp.end()
+        if self.flag == True:
+            painter = QPainter(self)
+            self.circle(painter)
+            painter.end()
+
+    def circle(self, qp):
+        for i in range(40):
+            self.x = random.randint(1, self.dx - 1)
+            self.y = random.randint(1, self.dy - 1)
+            qp.setBrush(QColor(255, 255, 0))
+            # qp.setPen(QColor(255, 255, 0))
+            width = random.randint(1, min(min(abs(self.x - self.dx), abs(self.y - self.dy)), min(self.x, self.y)))
+            qp.drawEllipse(self.x - width // 2, self.y - width // 2, width, width)
 
     def paint(self):
-        self.do_paint = True
+        self.flag = True
         self.repaint()
 
 
