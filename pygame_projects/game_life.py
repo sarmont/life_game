@@ -30,7 +30,6 @@ class Board:
                         self.left + self.cell_size * i, self.top + self.cell_size * j, self.cell_size, self.cell_size),
                                      width=0)
 
-
     def get_cell(self, xy):
         x = xy[0]
         y = xy[1]
@@ -50,16 +49,33 @@ class Board:
             elif self.board[y][x] == 1:
                 self.board[y][x] = 0
 
-
     def get_click(self, xy):
         print(board.get_cell(xy))
         board.on_click(xy)
 
-class  Life(Board):
+
+class Life(Board):
     def __init__(self, width, height):
         super().__init__(width, height)
 
+    def count_life_cell(self, x, y):
+        """
+        подсчет количества живых клеток вокруг текущей
+        """
+        count = 0
+        for i in (0, 1, -1):
+            for j in (0, 1, -1):
+                if 0 <( x - i) < 40 and 0 < (y - j )< 40 and (i != 0 or j != 0):
+                    count += 1
+        print((x, y), count)
+        return count
+
     def next_move(self):
+        for j in range(self.height):
+            for i in range(self.width):
+                if self.board[j][i] == 0:
+                    if self.count_life_cell(j,i) == 3:
+                        self.board[j][i] = 1
 
 
 
@@ -77,6 +93,8 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 xy = pygame.mouse.get_pos()
                 board.get_click(xy)
+            if event.type == pygame.K_SPACE:
+                board.next_move()
         screen.fill((0, 0, 0))
         board.render(screen)
         pygame.display.flip()
