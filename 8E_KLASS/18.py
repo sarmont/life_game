@@ -1,10 +1,8 @@
-n = int(input())
-words = []
-for i in range(n):
-    words.append(input())
-print(words)
-for i in range(len(words) - 1):
-    for j in range(i + 1, len(words)):
-        if words[i] > words[j]:
-            words[i], words[j] = words[j], words[i]
-print(words)
+s = open('24.txt').readlines()
+count  = 0
+for line in s:
+    if line.count('AOA') > line.count('OAO'):
+        count += 1
+
+print(count)
+

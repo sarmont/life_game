@@ -1,4 +1,24 @@
-s = input()
-nums = [int(el) for el in s.split() if int(el) % 2 != 0]
-sq = [str(i ** 2) for i in nums if i ** 2 % 10 != 9]
-print(' '.join(sq))
+import turtle
+
+v = turtle.Turtle()
+
+def vanya():
+    for i in range(4):
+        v.fd(100)
+        v.rt(90)
+    v.rt(90)
+    v.fd(100)
+    v.lt(90)
+    v.fd(50)
+    v.circle(50)
+
+vanya()
+v.rt(300)
+v.fd(50)
+vanya()
+
+
+
+
+
+input()

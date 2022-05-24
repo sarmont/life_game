@@ -1,12 +1,12 @@
-n = input()
-q1 = []
-q2 = []
-while not n.isdigit():
-    q1.append(len(n))
-    q2.append(n)
-    n = input()
-
-print(q2[q1.index(max(q1))])
-print(q2[q1.index(min(q1))])
+q = [[1,5,8],
+     [9,5,2],
+     [4,8,1]]
+print(q[0][1])
+s = 0
+for i in range(len(q)):
+    for j in range(len(q)):
+        if i == j:
+            s += q[i][j]
+print(s)
 
 

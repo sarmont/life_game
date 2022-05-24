@@ -1,11 +1,14 @@
-password = 'Masha'
-p = 5
-for i in range(p):
-    print('Введите пароль')
-    print("У вас попыток", p - i)
-    user_pas = input()
-    if user_pas == password:
-        print("Вы отгадали. Вы экстрасенс!")
-        break
-    else:
-        print("Повторите попытку. Вы ошиблись!")
+a = int(input())
+r = int(input())
+
+skv = a * a
+sokr = 3.14 * r ** 2
+
+if skv > sokr:
+    print('Квадрат')
+elif sokr> skv:
+    print('Окружность')
+else:
+    print('фигуры равны')
+
+

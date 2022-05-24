@@ -1,10 +1,11 @@
-n = 5
-s = 'asjdhk - ashdkj - jkas - hdjhs - akjdh - jashkdj - hjaksdh - ajdhaskj - dhaskjh'
-words = [word for word in s.split(' - ')]
-print(words)
-count = 0
-q = []
-for el in words:
-    if len(el) > n:
-        q.append(el)
-print('; '.join(q))
+# создаем список нулей
+s = [0]* 10000000
+
+# стартовое значение
+s[9] = 1
+for i in range(9,12 + 1):
+    s[i + 1] += s[i]
+    s[i +2] += s[i]
+    s[i *2] += s[i]
+
+print(s[12])

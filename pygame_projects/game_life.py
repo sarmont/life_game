@@ -1,3 +1,5 @@
+import copy
+
 import pygame
 
 
@@ -63,20 +65,25 @@ class Life(Board):
         подсчет количества живых клеток вокруг текущей
         """
         count = 0
+        print('Считаем жизни')
         for i in (0, 1, -1):
             for j in (0, 1, -1):
-                if 0 <( x - i) < 40 and 0 < (y - j )< 40 and (i != 0 or j != 0):
+                if 0 < (x - i) < 40 and 0 < (y - j) < 40 and (i != 0 or j != 0) and self.board[x][y]==1:
                     count += 1
         print((x, y), count)
         return count
 
     def next_move(self):
+        print('Start')
+        temp = copy.deepcopy(self.board)
         for j in range(self.height):
             for i in range(self.width):
                 if self.board[j][i] == 0:
-                    if self.count_life_cell(j,i) == 3:
+                    if self.count_life_cell(j, i) == 3:
                         self.board[j][i] = 1
-
+                    elif 2>self.count_life_cell(j, i) > 3:
+                        self.board[j][i] = 0
+        self.board = copy.deepcopy(temp)
 
 
 if __name__ == '__main__':
@@ -86,16 +93,21 @@ if __name__ == '__main__':
     board = Life(39, 39)
     pygame.display.set_caption('Инициализация игры')
     running = True
+    start_stop = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                xy = pygame.mouse.get_pos()
-                board.get_click(xy)
-            if event.type == pygame.K_SPACE:
-                board.next_move()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                print('mouse')
+                # xy = pygame.mouse.get_pos()
+                board.get_click(event.pos)
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                print('space')
+                start_stop = not start_stop
         screen.fill((0, 0, 0))
         board.render(screen)
+        if start_stop:
+            board.next_move()
         pygame.display.flip()
     pygame.quit()
